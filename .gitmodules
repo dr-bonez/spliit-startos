@@ -1,0 +1,3 @@
+[submodule "spliit"]
+	path = spliit
+	url = https://github.com/spliit-app/spliit.git
