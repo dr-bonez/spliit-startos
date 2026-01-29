@@ -46,11 +46,28 @@ export const main = sdk.setupMain(async ({ effects }) => {
       },
       ready: {
         display: 'Database',
-        fn: () =>
-          sdk.healthCheck.checkPortListening(effects, postgresPort, {
-            successMessage: 'PostgreSQL is ready',
-            errorMessage: 'PostgreSQL is not ready',
-          }),
+        fn: async () => {
+          const { exitCode } = await postgresSub.exec([
+            'pg_isready',
+            '-U',
+            postgresUser,
+            '-d',
+            postgresDb,
+            '-h',
+            'localhost',
+          ])
+
+          if (exitCode !== 0) {
+            return {
+              result: 'loading',
+              message: 'Waiting for PostgreSQL to be ready',
+            }
+          }
+          return {
+            result: 'success',
+            message: 'PostgreSQL is ready',
+          }
+        },
       },
       requires: [],
     })
@@ -59,7 +76,8 @@ export const main = sdk.setupMain(async ({ effects }) => {
       exec: {
         command: sdk.useEntrypoint(),
         env: {
-          DATABASE_URL: databaseUrl,
+          POSTGRES_PRISMA_URL: databaseUrl,
+          POSTGRES_URL_NON_POOLING: databaseUrl,
           NEXT_TELEMETRY_DISABLED: '1',
         },
       },
