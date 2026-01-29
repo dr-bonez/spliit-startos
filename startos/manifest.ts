@@ -4,11 +4,11 @@ export const manifest = setupManifest({
   id: 'spliit',
   title: 'Spliit',
   license: 'MIT',
-  wrapperRepo: 'https://github.com/Start9Labs/spliit-startos',
+  wrapperRepo: 'https://github.com/dr-bonez/spliit-startos',
   upstreamRepo: 'https://github.com/spliit-app/spliit',
   supportSite: 'https://github.com/spliit-app/spliit/issues',
   marketingSite: 'https://spliit.app/',
-  donationUrl: null,
+  donationUrl: 'https://donate.stripe.com/28o3eh96G7hH8k89Ba',
   docsUrl: 'https://github.com/spliit-app/spliit#readme',
   description: {
     short: 'Free and open source expense sharing app',
@@ -30,8 +30,7 @@ export const manifest = setupManifest({
     },
   },
   alerts: {
-    install:
-      'Spliit uses a PostgreSQL database to store your data. All data is stored locally on your StartOS server.',
+    install: null,
     update: null,
     uninstall:
       'Uninstalling Spliit will delete all expense data. Make sure to export any data you want to keep.',
